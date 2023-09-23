@@ -1,18 +1,23 @@
-package com.jpafinal.JAPFull.entiry;
+package com.jpafinal.JAPFull.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(
+        name = "tbl_student",
+        uniqueConstraints = @UniqueConstraint(
+                name = "email",
+                columnNames = "emailId"
+        )
+)
 public class Student {
     @Id
     @SequenceGenerator(
@@ -27,6 +32,10 @@ public class Student {
     private Long studentId;
     private String firstName;
     private String lastName;
+    @Column(
+            nullable = false
+    )
     private String emailId;
-
+    @Embedded
+    private Guardian guardian;
 }
