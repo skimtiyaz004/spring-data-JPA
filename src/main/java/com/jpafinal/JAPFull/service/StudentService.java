@@ -6,6 +6,7 @@ import com.jpafinal.JAPFull.entity.Student;
 import com.jpafinal.JAPFull.repository.StudentRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +45,15 @@ public class StudentService {
         TypedQuery<Student> query=entityManager.createQuery(jpql,Student.class);
         query.setParameter("studentId",id);
         return  query.getSingleResult();
+    }
+
+    @Transactional
+    public Student updateStudent(long id, StudentDTO req) throws Exception {
+
+        Student student=studentRepository.findById(id).orElseThrow(()-> new Exception("NoStudent Found"));
+        student.setFirstName(req.getFirstName());
+        student.setLastName(req.getLastName());
+        studentRepository.save(student);
+        return student;
     }
 }

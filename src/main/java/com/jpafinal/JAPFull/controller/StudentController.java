@@ -32,4 +32,9 @@ public class StudentController {
          Student  student =studentService.getSingleStudentByQuery(id);
         return new ResponseEntity<Student>(student, HttpStatus.OK);
     }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateStudent(@PathVariable long id, @RequestBody StudentDTO req) throws Exception {
+        Student  student =studentService.updateStudent(id,req);
+        return new ResponseEntity<Student>(student, HttpStatus.OK);
+    }
 }
